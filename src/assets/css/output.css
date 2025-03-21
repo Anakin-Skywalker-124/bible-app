@@ -6,8 +6,11 @@
     'Noto Color Emoji';
     --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New',
     monospace;
+    --color-slate-950: oklch(0.129 0.042 264.695);
+    --color-stone-50: oklch(0.985 0.001 106.423);
     --color-stone-200: oklch(0.923 0.003 48.717);
-    --color-stone-800: oklch(0.268 0.007 34.298);
+    --color-stone-950: oklch(0.147 0.004 49.25);
+    --spacing: 0.25rem;
     --text-3xl: 1.875rem;
     --text-3xl--line-height: calc(2.25 / 1.875);
     --font-weight-bold: 700;
@@ -158,8 +161,20 @@
   }
 }
 @layer utilities {
-  .bg-stone-800 {
-    background-color: var(--color-stone-800);
+  .hidden {
+    display: none;
+  }
+  .inline {
+    display: inline;
+  }
+  .h-5 {
+    height: calc(var(--spacing) * 5);
+  }
+  .w-5 {
+    width: calc(var(--spacing) * 5);
+  }
+  .bg-stone-50 {
+    background-color: var(--color-stone-50);
   }
   .text-3xl {
     font-size: var(--text-3xl);
@@ -169,11 +184,21 @@
     --tw-font-weight: var(--font-weight-bold);
     font-weight: var(--font-weight-bold);
   }
-  .text-stone-200 {
-    color: var(--color-stone-200);
+  .text-stone-950 {
+    color: var(--color-stone-950);
   }
   .underline {
     text-decoration-line: underline;
+  }
+  .dark\:bg-slate-950 {
+    &:where(.dark, .dark *) {
+      background-color: var(--color-slate-950);
+    }
+  }
+  .dark\:text-stone-200 {
+    &:where(.dark, .dark *) {
+      color: var(--color-stone-200);
+    }
   }
 }
 @property --tw-font-weight {
