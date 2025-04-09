@@ -40,13 +40,15 @@ if (localStorage.getItem('color-theme')) {
 
 });
 
-
-function verseLookup() {
+async function verseLookup() {
     var verse = document.getElementById("search").value;
-    var url = "/api?verse=" + verse;
+    var headings = "true";
+    var extras = "true";
+    var numbers = "true";
+    var url = "/api?verse=" + verse + "&headings=" + headings + "&extras=" + extras + "&numbers=" + numbers;
     fetch(url)
+       .then(response => response.text())
        .then(data => {
-        console.log(data);
         document.getElementById("verse").innerHTML = data;
     });
 }
