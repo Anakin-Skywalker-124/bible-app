@@ -42,9 +42,9 @@ if (localStorage.getItem('color-theme')) {
 
 async function verseLookup() {
     var verse = document.getElementById("search").value;
-    var headings = "true";
-    var extras = "true";
-    var numbers = "true";
+    var headings = document.getElementById("headings").checked;
+    var extras = document.getElementById("extras").checked;
+    var numbers = document.getElementById("numbers").checked;
     var url = "/api?verse=" + verse + "&headings=" + headings + "&extras=" + extras + "&numbers=" + numbers;
     fetch(url)
        .then(response => response.text())
@@ -59,3 +59,8 @@ inputField.addEventListener("keydown", function(event) {
     verseLookup();
   }
 });
+
+["headings", "extras", "numbers"].forEach(function(id) {
+    document.getElementById(id).addEventListener("change", verseLookup);
+});
+
