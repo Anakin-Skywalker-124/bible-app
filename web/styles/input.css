@@ -30,10 +30,11 @@ h3 {
 	@apply text-red-800 dark:text-red-500;
 }
 
-.chapter-num, .verse-num{
-     @apply dark:text-stone-200 text-stone-950 
+.footnote{
+	@apply dark:text-stone-200 text-stone-950 text-sm px-1;
 }
 
-.footnote{
-	@apply dark:text-stone-200 text-stone-950 text-sm px-1
+.chapter-num, .verse-num {
+     @apply dark:text-stone-200 text-stone-950;
 }
+
