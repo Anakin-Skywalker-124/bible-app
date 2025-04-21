@@ -40,6 +40,25 @@ if (localStorage.getItem('color-theme')) {
 
 });
 
+
+const searchHistory= new Set();
+
+function addHistoryItem(verse) {
+  document.getElementById("history").innerHTML += "<div class=\"history-item\">" +
+  "<button class=\"cursor-pointer underline\" onclick=\"useHistory('" + verse + "')\">" + verse + "</button>"
+  +"</div>";
+}
+
+function createHistory(){
+    document.getElementById("history").innerHTML = "";
+    searchHistory.forEach(addHistoryItem);
+}
+
+function useHistory(verse) {
+    document.getElementById("search").value = verse;
+    verseLookup();
+}
+
 async function verseLookup() {
     var verse = document.getElementById("search").value;
     var headings = document.getElementById("headings").checked;
@@ -50,11 +69,13 @@ async function verseLookup() {
        .then(response => response.json())
        .then(data => {
         document.getElementById("verse").innerHTML = data.passages.join("");
-        document.getElementById("history").innerHTML += "<div class=\history-item\>" + data.query +"</div>";
-    });
+        searchHistory.add(data.query);
+    })
+    .then (createHistory());
+    createHistory();
     window.scrollTo(0,0);
 }
- 
+
 var inputField = document.getElementById("search");
 inputField.addEventListener("keydown", function(event) {
   if (event.key === 'Enter') {
