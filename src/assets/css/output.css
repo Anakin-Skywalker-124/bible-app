@@ -8,6 +8,7 @@
     monospace;
     --color-red-500: oklch(0.637 0.237 25.331);
     --color-red-800: oklch(0.444 0.177 26.899);
+    --color-green-500: oklch(0.723 0.219 149.579);
     --color-slate-100: oklch(0.968 0.007 247.896);
     --color-slate-200: oklch(0.929 0.013 255.508);
     --color-slate-300: oklch(0.869 0.022 252.894);
@@ -506,6 +507,19 @@ h3 {
   &:where(.dark, .dark *) {
     color: var(--color-stone-200);
   }
+}
+.highlighted {
+  background-color: var(--color-green-500);
+  color: var(--color-stone-950);
+  &:where(.dark, .dark *) {
+    background-color: var(--color-green-500);
+  }
+  &:where(.dark, .dark *) {
+    color: var(--color-stone-950);
+  }
+}
+.verse a {
+  scroll-margin: 53px;
 }
 @layer utilities {
   .no-scrollbar::-webkit-scrollbar {

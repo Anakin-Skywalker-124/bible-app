@@ -38,11 +38,13 @@ h3 {
      @apply dark:text-stone-200 text-stone-950;
 }
 
+.highlighted{
+  @apply dark:bg-green-500 bg-green-500 dark:text-stone-950 text-stone-950;
+}
 
-
-
- 
-
+.verse a {
+  scroll-margin: 53px;
+}
 
 @layer utilities {
       
