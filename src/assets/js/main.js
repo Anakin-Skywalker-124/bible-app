@@ -1,4 +1,5 @@
-
+var allowHighlighting = false;
+var buttonClicked = "";
 var themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
 var themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
 
@@ -94,6 +95,10 @@ inputField.addEventListener("keydown", function(event) {
 });
 
 
+
+
+
+
 function wrapText() {
     const anchors = document.querySelectorAll("a.va");
     anchors.forEach((anchor) => {
@@ -126,6 +131,9 @@ function wrapText() {
 
         // Add click-to-highlight functionality
         wrapper.addEventListener("click", () => {
+            if (allowHighlighting) {
+
+
             wrapper.classList.toggle("highlighted");
             const id = wrapper.getAttribute("data-verse");
             if (wrapper.classList.contains("highlighted")) {
@@ -135,8 +143,21 @@ function wrapText() {
                 console.log(`Unhighlighted: ${id}`);
                 // Remove it from your backend
             }
+           
+        }
+
         });
     });
+}
+
+
+
+function HighlightButtonCilcked() {
+    if (allowHighlighting) {
+        allowHighlighting = false;
+    } else {
+        allowHighlighting = true; 
+    }
 }
 
 function hasClass(ele, cls) {

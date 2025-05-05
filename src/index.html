@@ -34,8 +34,7 @@ flex justify-between items-center dark:text-stone-200 bg-slate-200 dark:bg-stone
   <h1 class="text-3xl font-bold underline">
     Hello my Beautiful Class!
   </h1>
-  <nav class="real-menu dark:border-slate-800 dark:text-stone-200 dark:bg-stone-700 bg-slate-200 border-slate-200" role="navigation">            
-    <nav class="real-menu dark:border-stone-700 border-violet-200 dark:text-stone-200 dark:bg-stone-800 bg-violet-100" role="navigation">            
+  <nav class="real-menu dark:border-slate-800 dark:text-stone-200 dark:bg-stone-700 bg-slate-200 border-slate-200" role="navigation">        
       <div class="flex items-center gap-x-3 pb-1">
         <label for="headings" class="relative inline-block w-11 h-6 cursor-pointer">
           <input type="checkbox" id="headings" class="peer sr-only" checked/>
@@ -71,7 +70,26 @@ flex justify-between items-center dark:text-stone-200 bg-slate-200 dark:bg-stone
       </label>
       <label for="theme-toggle">Dark Mode</label>
     </div>
-   
+    <div class="items-center">
+      <button type="button" onclick="HighlightButtonClicked()" id="highlight-red" class="bg-red-600 aspect-1/1 w-6 rounded-sm outline -outline-offset-1 outline-black/10 sm:rounded-md dark:outline-white/10"></button>
+      <button type="button" id="highlight-orange" class="bg-orange-600 aspect-1/1 w-6 rounded-sm outline -outline-offset-1 outline-black/10 sm:rounded-md dark:outline-white/10"></button>
+      <button type="button" id="highlight-amber" class="bg-amber-600 aspect-1/1 w-6 rounded-sm outline -outline-offset-1 outline-black/10 sm:rounded-md dark:outline-white/10"></button>
+      <button type="button" id="highlight-yellow" class="bg-yellow-600 aspect-1/1 w-6 rounded-sm outline -outline-offset-1 outline-black/10 sm:rounded-md dark:outline-white/10"></button>
+      <button type="button" id="highlight-lime" class="bg-lime-600 aspect-1/1 w-6 rounded-sm outline -outline-offset-1 outline-black/10 sm:rounded-md dark:outline-white/10"></button>
+      <button type="button" id="highlight-green" class="bg-green-600 aspect-1/1 w-6 rounded-sm outline -outline-offset-1 outline-black/10 sm:rounded-md dark:outline-white/10"></button>
+      <button type="button" id="highlight-emerald" class="bg-emerald-600 aspect-1/1 w-6 rounded-sm outline -outline-offset-1 outline-black/10 sm:rounded-md dark:outline-white/10"></button>
+      <button type="button" id="highlight-teal" class="bg-teal-600 aspect-1/1 w-6 rounded-sm outline -outline-offset-1 outline-black/10 sm:rounded-md dark:outline-white/10"></button>
+    </div>
+    <div class="items-center">
+      <button type="button" id="highlight-rose" class="bg-rose-600 aspect-1/1 w-6 rounded-sm outline -outline-offset-1 outline-black/10 sm:rounded-md dark:outline-white/10"></button>
+      <button type="button" id="highlight-pink" class="bg-pink-600 aspect-1/1 w-6 rounded-sm outline -outline-offset-1 outline-black/10 sm:rounded-md dark:outline-white/10"></button>
+      <button type="button" id="highlight-fuchsia" class="bg-fuchsia-600 aspect-1/1 w-6 rounded-sm outline -outline-offset-1 outline-black/10 sm:rounded-md dark:outline-white/10"></button>
+      <button type="button" id="highlight-violet" class="bg-violet-600 aspect-1/1 w-6 rounded-sm outline -outline-offset-1 outline-black/10 sm:rounded-md dark:outline-white/10"></button>
+      <button type="button" id="highlight-indigo" class="bg-indigo-600 aspect-1/1 w-6 rounded-sm outline -outline-offset-1 outline-black/10 sm:rounded-md dark:outline-white/10"></button>
+      <button type="button" id="highlight-blue" class="bg-blue-600 aspect-1/1 w-6 rounded-sm outline -outline-offset-1 outline-black/10 sm:rounded-md dark:outline-white/10"></button>
+      <button type="button" id="highlight-sky" class="bg-sky-600 aspect-1/1 w-6 rounded-sm outline -outline-offset-1 outline-black/10 sm:rounded-md dark:outline-white/10"></button>
+      <button type="button" id="highlight-cyan" class="bg-cyan-600 aspect-1/1 w-6 rounded-sm outline -outline-offset-1 outline-black/10 sm:rounded-md dark:outline-white/10"></button>
+    </div>
   </nav>
   <div id="verse"></div>
 </main>
