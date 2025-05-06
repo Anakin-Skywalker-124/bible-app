@@ -1,5 +1,6 @@
 var allowHighlighting = false;
 var buttonClicked = "";
+var highlightColor = "";
 var themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
 var themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
 
@@ -134,7 +135,7 @@ function wrapText() {
             if (allowHighlighting) {
 
 
-            wrapper.classList.toggle("highlighted");
+            wrapper.classList.toggle(highlightColor);
             const id = wrapper.getAttribute("data-verse");
             if (wrapper.classList.contains("highlighted")) {
                 console.log(`Highlighted: ${id}`);
@@ -151,13 +152,17 @@ function wrapText() {
 }
 
 
-
-function HighlightButtonCilcked() {
-    if (allowHighlighting) {
+function HighlightButtonClicked(me) {
+    console.log(me.id);
+    if (allowHighlighting && me.id == buttonClicked) {
         allowHighlighting = false;
     } else {
+        buttonClicked = me.id;
         allowHighlighting = true; 
+        highlightColor = "bg-" + me.id.split("-")[1] + "-600";
+        console.log(highlightColor);
     }
+
 }
 
 function hasClass(ele, cls) {
