@@ -1,6 +1,27 @@
 var allowHighlighting = false;
 var buttonClicked = "";
 var highlightColor = "";
+const highlightColors = [
+    "bg-red-600",
+    "bg-orange-600",
+    "bg-amber-600",
+    "bg-yellow-600",
+    "bg-lime-600",
+    "bg-green-600",
+    "bg-emerald-600",
+    "bg-teal-600",
+    "bg-cyan-600",
+    "bg-sky-600",
+    "bg-blue-600",
+    "bg-indigo-600",
+    "bg-violet-600",
+    "bg-fuchsia-600",
+    "bg-pink-600",
+    "bg-rose-600"
+];
+
+
+
 var themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
 var themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
 
@@ -133,23 +154,20 @@ function wrapText() {
         // Add click-to-highlight functionality
         wrapper.addEventListener("click", () => {
             if (allowHighlighting) {
+                if (hasClass(wrapper, highlightColor)) {
+                   removeClass(wrapper, highlightColor);
+                }else{
+                   highlightColors.forEach(color => {
+                    removeClass(wrapper, color);
+                });
+                addClass(wrapper, highlightColor);
 
-
-            wrapper.classList.toggle(highlightColor);
-            const id = wrapper.getAttribute("data-verse");
-            if (wrapper.classList.contains("highlighted")) {
-                console.log(`Highlighted: ${id}`);
-                // You can send this ID to your backend
-            } else {
-                console.log(`Unhighlighted: ${id}`);
-                // Remove it from your backend
             }
-           
         }
-
         });
     });
 }
+
 
 
 function HighlightButtonClicked(me) {
@@ -161,6 +179,7 @@ function HighlightButtonClicked(me) {
         allowHighlighting = true; 
         highlightColor = "bg-" + me.id.split("-")[1] + "-600";
         console.log(highlightColor);
+    
     }
 
 }
