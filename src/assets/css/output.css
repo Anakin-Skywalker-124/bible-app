@@ -357,8 +357,14 @@
   .border-slate-200 {
     border-color: var(--color-slate-200);
   }
+  .border-stone-200 {
+    border-color: var(--color-stone-200);
+  }
   .border-stone-900 {
     border-color: var(--color-stone-900);
+  }
+  .border-transparent {
+    border-color: transparent;
   }
   .bg-amber-600 {
     background-color: var(--color-amber-600);
