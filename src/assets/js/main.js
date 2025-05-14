@@ -136,11 +136,6 @@ function wrapText() {
         }
 
 
-        // Check if the verse is in the highlightedVerses array
-       if (highlightedVerses.includes(verseId)) {
-            console.log("Highlighting verse:", verseId);
- 
-        }
 
         let current = anchor;
         const parent = anchor.parentNode;
@@ -164,14 +159,28 @@ function wrapText() {
 
         // Add click-to-highlight functionality
         wrapper.addEventListener("click", () => {
-            highlightWrapper(wrapper);
+            highlightWrapper(wrapper, highlightColor); 
+            var verseId = wrapper.getAttribute("data-verse"); 
             
-            
+            if (highlightedVerses[verseId]) {
+                delete highlightedVerses[verseId];
+            } else {
+                highlightedVerses[verseId] = highlightColor;
+            }
         }); 
+
+        // Check if the verse is in the highlightedVerses array
+        if (highlightedVerses[verseId]) {
+            console.log("Highlighting verse:", verseId);
+            allowHighlighting = true;
+            highlightWrapper(wrapper, highlightedVerses[verseId]);
+            allowHighlighting = false;
+        }
+
     });
 }
 
-function highlightWrapper(wrapper){
+function highlightWrapper(wrapper, highlightColor){
     const children = wrapper.children;
     if (allowHighlighting) {
         if (hasClass(wrapper, highlightColor)) {
