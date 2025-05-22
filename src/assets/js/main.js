@@ -1,6 +1,6 @@
 var allowHighlighting = false;
 var buttonClicked = "";
-var highlightColor = "";
+var hightlightColor = "";
 const highlightColors = [
     "bg-red-600",
     "bg-orange-600",
@@ -12,18 +12,19 @@ const highlightColors = [
     "bg-teal-600",
     "bg-cyan-600",
     "bg-sky-600",
-    "bg-blue-600",
+    "bg-rose-600",
     "bg-indigo-600",
     "bg-violet-600",
     "bg-fuchsia-600",
     "bg-pink-600",
-    "bg-rose-600"
+    "bg-blue-600"
 ];
 
+// Highlighted Verses, tuple of verse number and color
 var highlightedVerses = {
-    "v43003016": "bg-lime-600", 
+    "v43003017": "bg-lime-600", 
     "v43003019": "bg-blue-600", 
-    "v43003021": "bg-rose-600"
+    "v43003021": "bg-pink-600"
 };
 
 var themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
@@ -42,43 +43,43 @@ var themeToggleBtn = document.getElementById('theme-toggle');
 
 themeToggleBtn.addEventListener('click', function() {
 
-// toggle icons inside button
-themeToggleDarkIcon.classList.toggle('hidden');
-themeToggleLightIcon.classList.toggle('hidden');
+    // toggle icons inside button
+    themeToggleDarkIcon.classList.toggle('hidden');
+    themeToggleLightIcon.classList.toggle('hidden');
 
-// if set via local storage previously
-if (localStorage.getItem('color-theme')) {
-    if (localStorage.getItem('color-theme') === 'light') {
-        document.documentElement.classList.add('dark');
-        localStorage.setItem('color-theme', 'dark');
+    // if set via local storage previously
+    if (localStorage.getItem('color-theme')) {
+        if (localStorage.getItem('color-theme') === 'light') {
+            document.documentElement.classList.add('dark');
+            localStorage.setItem('color-theme', 'dark');
+        } else {
+            document.documentElement.classList.remove('dark');
+            localStorage.setItem('color-theme', 'light');
+        }
+
+    // if NOT set via local storage previously
     } else {
-        document.documentElement.classList.remove('dark');
-        localStorage.setItem('color-theme', 'light');
+        if (document.documentElement.classList.contains('dark')) {
+            document.documentElement.classList.remove('dark');
+            localStorage.setItem('color-theme', 'light');
+        } else {
+            document.documentElement.classList.add('dark');
+            localStorage.setItem('color-theme', 'dark');
+        }
     }
-
-// if NOT set via local storage previously
-} else {
-    if (document.documentElement.classList.contains('dark')) {
-        document.documentElement.classList.remove('dark');
-        localStorage.setItem('color-theme', 'light');
-    } else {
-        document.documentElement.classList.add('dark');
-        localStorage.setItem('color-theme', 'dark');
-    }
-}
-
+    
 });
 
 
-const searchHistory= new Set();
+const searchHistory = new Set();
 
 function addHistoryItem(verse) {
-  document.getElementById("history").innerHTML += "<div class=\"history-item\">" +
-  "<button class=\"cursor-pointer underline\" onclick=\"useHistory('" + verse + "')\">" + verse + "</button>"
-  +"</div>";
+    document.getElementById("history").innerHTML += "<div class=\"history-item\">" + 
+    "<button class=\"cursor-pointer underline\" onclick=\"useHistory('" + verse + "')\" >" + verse + "</button>"
+    + "</div>";
 }
 
-function createHistory(){
+function createHistory() {
     document.getElementById("history").innerHTML = "";
     searchHistory.forEach(addHistoryItem);
 }
@@ -92,35 +93,52 @@ function clearSearchHistory() {
     document.getElementById('history').innerHTML = '';
     searchHistory.clear();
 }
+
 async function verseLookup() {
     var verse = document.getElementById("search").value;
     var headings = document.getElementById("headings").checked;
     var extras = document.getElementById("extras").checked;
     var numbers = document.getElementById("numbers").checked;
-    var url = "/api?verse=" + verse + "&headings=" + headings + "&extras=" + extras + "&numbers=" + numbers;
-    fetch(url)
-       .then(response => response.json())
-       .then(data => {
-        document.getElementById("verse").innerHTML = data.passages.join("");
-        searchHistory.add(data.query);
-        createHistory();
-        wrapText();
-    })
+
+    if (verse.match(/(\d+)/)) {
+        var url = "/api?verse=" + verse + "&headings=" + headings + "&extras=" + extras + "&numbers=" + numbers;
+        fetch(url)
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById("verse").innerHTML = data.passages.join("");
+                searchHistory.add(data.query);
+                createHistory();
+                wrapText();
+        });
+    } else {
+        var url = "/search?search=" + verse;
+        fetch(url)
+            .then(response => response.json())
+            .then(data => {
+                let html = '<ul>';
+                data.results.forEach(obj => {
+                    html += "<li><button class=\"cursor-pointer underline\" onclick=\"useHistory('" + obj.reference + "')\" >" + obj.reference + "</button>"
+                    html += ` -- ${obj.content}</li>`;
+                });
+                html += '</ul>';
+                document.getElementById("verse").innerHTML = html;
+                searchHistory.add(verse);
+                createHistory();
+            });
+    }
     window.scrollTo(0,0);
 }
 
-var inputField = document.getElementById("search");
-inputField.addEventListener("keydown", function(event) {
-  if (event.key === 'Enter') {
-    verseLookup();
-  }
+var inputField = document.getElementById('search');
+inputField.addEventListener('keydown', function(event) {
+    if (event.key === 'Enter') {
+        verseLookup();
+    }
 });
 
 ["headings", "extras", "numbers"].forEach(function(id) {
-    document.getElementById(id).addEventListener("change", verseLookup);
+    document.getElementById(id).addEventListener('change', verseLookup);
 });
-
-
 
 
 
@@ -134,8 +152,6 @@ function wrapText() {
         if (verseId) {
             wrapper.setAttribute("data-verse", verseId);
         }
-
-
 
         let current = anchor;
         const parent = anchor.parentNode;
@@ -159,15 +175,17 @@ function wrapText() {
 
         // Add click-to-highlight functionality
         wrapper.addEventListener("click", () => {
-            highlightWrapper(wrapper, highlightColor); 
-            var verseId = wrapper.getAttribute("data-verse"); 
-            
-            if (highlightedVerses[verseId]) {
+            highlightWrapper(wrapper, hightlightColor);
+            var verseId = wrapper.getAttribute("data-verse");
+
+            if (highlightedVerses[verseId] && highlightedVerses[verseId] === hightlightColor) {
                 delete highlightedVerses[verseId];
             } else {
-                highlightedVerses[verseId] = highlightColor;
+                highlightedVerses[verseId] = hightlightColor;
             }
-        }); 
+
+        });
+
 
         // Check if the verse is in the highlightedVerses array
         if (highlightedVerses[verseId]) {
@@ -177,59 +195,62 @@ function wrapText() {
             allowHighlighting = false;
         }
 
+
+
     });
+
+
 }
 
-function highlightWrapper(wrapper, highlightColor){
+function highlightWrapper(wrapper, hightlightColor) {
     const children = wrapper.children;
     if (allowHighlighting) {
-        if (hasClass(wrapper, highlightColor)) {
-           removeClass(wrapper, highlightColor);
-           for (child of children) {
-                if(hasClass(child, "woc-highlighted")){
-                removeClass(child, "woc-highlighted");
-                addClass(child, "woc");
-            }
+        if (hasClass(wrapper, hightlightColor)) {
+            removeClass(wrapper, hightlightColor);
+            for (child of children) {
+                if(hasClass(child, "woc-highlighted")) {
+                    removeClass(child, "woc-highlighted");
+                    addClass(child, "woc");
+                }
             }
         } else {
-           highlightColors.forEach(color => {
-            removeClass(wrapper, color);
-        });
-        addClass(wrapper, highlightColor);
-        for(child of children) {
-            if(hasClass)(child, "woc");{
-                removeClass(child, "woc");
-                addClass(child, "woc-highlighted");
-            }    
+            highlightColors.forEach((color) => {
+                removeClass(wrapper, color);
+            });
+            addClass(wrapper, hightlightColor);
+            for (child of children) {
+                if(hasClass(child, "woc")) {
+                    removeClass(child, "woc");
+                    addClass(child, "woc-highlighted");
+                }
+            }
         }
-    }}
+    }
 }
 
 function HighlightButtonClicked(me) {
     //console.log(me.id);
     var buttons = document.querySelectorAll(".highlight-button");
-    buttons.forEach(button=>{
-       removeClass(button, "dark:border-slate-300");
-       removeClass(button, "border-slate-700");
-       addClass(button, "border-transparent");
+    buttons.forEach(button => {
+        removeClass(button, "dark:border-stone-300");
+        removeClass(button, "border-violet-800");
+        addClass(button, "border-transparent");
     });
-    
-    if (allowHighlighting && me.id == buttonClicked) {
+    if (allowHighlighting && me.id === buttonClicked) {
         allowHighlighting = false;
-
-
     } else {
         removeClass(me, "border-transparent");
-        addClass(me, "dark:border-slate-300");
-        addClass(me, "border-stone-700");
-        buttonClicked = me.id;
-        allowHighlighting = true; 
-        highlightColor = "bg-" + me.id.split("-")[1] + "-600";
-        //console.log(highlightColor);
-    
-    }
+        addClass(me, "dark:border-stone-300");
+        addClass(me, "border-violet-800");
 
+        buttonClicked = me.id;
+        allowHighlighting = true;
+        hightlightColor = "bg-" + me.id.split("-")[1] + "-600";
+        //console.log(hightlightColor);
+
+    }
 }
+
 
 function hasClass(ele, cls) {
     return !!ele.className.match(new RegExp('(\\s|^)' + cls + '(\\s|$)'));
@@ -268,6 +289,3 @@ document.addEventListener('readystatechange', function() {
         init();
     }
 });
-
-
-
