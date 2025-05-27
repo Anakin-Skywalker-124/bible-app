@@ -111,7 +111,7 @@ async function verseLookup() {
                 wrapText();
         });
 
-    } else if (verse.match(/romans Road/i) || verse.match(/roman's Road/i)) {
+    } else if (verse.match(/romans road/i) || verse.match(/roman's road/i)) {
        document.getElementById("verse").innerHTML = "<h1>The Romans Road to Salvation</h1>";
        let verses = [
         "Romans 3:23",
@@ -124,19 +124,15 @@ async function verseLookup() {
         "Romans 10:17",
        ];
        let collector = "";
-       let count = verses.length;
-       verses.forEach(verse => {
-            let url = "/api?verse=" + verse + "&headings=" + headings + "&extras=" + extras + "&numbers=" + numbers;
-            fetch(url)
-                .then(response => response.json())
-                .then(data => {
-                   collector += data.passages.join("");
-
-               //searchHistory.add(data.query);
-                //    createHistory();
-                  //  wrapText();
+                getDataInOrder(verses).then(data => {
+                    let count = data.length;
+                    data.forEach(obj => {
+                   collector += obj.passages.join("");
                   if (--count === 0) {
-                    document.getElementById("verse").innerHTML = collector;
+                    document.getElementById("verse").innerHTML += collector;
+                    searchHistory.add("Romans Road");
+                    createHistory();
+                    wrapText();
                   }
        });
     });
@@ -159,6 +155,17 @@ async function verseLookup() {
     }
     window.scrollTo(0,0);
 }
+
+
+async function getDataInOrder(verses) {
+    const promises = verses.map(verse => {
+        let url = "/api?verse=" + verse + "&headings=false&extras=false&numbers=false";
+        return fetch(url).then(response => response.json())
+    });
+    return await Promise.all(promises);
+}
+    
+
 
 var inputField = document.getElementById('search');
 inputField.addEventListener('keydown', function(event) {
