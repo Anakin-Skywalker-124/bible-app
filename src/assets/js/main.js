@@ -197,13 +197,10 @@ function wrapText() {
         // Add the anchor itself to the wrapper
         wrapper.appendChild(current.cloneNode(true));
         let next = current.nextSibling;
-
         // Wrap content until the next anchor
-        const values = ["verse-num", "line", "begin-line-group", "end-line-group"]
-        while (next && !(next.nodeType === 1 &&
-            (next.matches("a.va")
-                || values.some(v => next.classList.contains(v))
-                || next.tagName.toLowerCase() === "p"))) {
+        const values = ["va", "verse-num", "line", "begin-line-group", "end-line-group"]
+        while (next && ! (next.nodeType === 1 && (values.some(v => next.classList.contains(v)))
+        )) {
             const sibling = next.nextSibling;
             wrapper.appendChild(next);
             next = sibling;
