@@ -1,6 +1,6 @@
 var allowHighlighting = false;
 var buttonClicked = "";
-var hightlightColor = "";
+var highlightColor = "";
 const highlightColors = [
     "bg-red-600",
     "bg-orange-600",
@@ -220,11 +220,11 @@ function highlightVerseByID(verseID, highlightColor) {
 }
 
 
-function highlightWrapper(wrapper, hightlightColor) {
+function highlightWrapper(wrapper, highlightColor) {
     const children = wrapper.children;
     if (allowHighlighting) {
-        if (hasClass(wrapper, hightlightColor)) {
-            removeClass(wrapper, hightlightColor);
+        if (hasClass(wrapper, highlightColor)) {
+            removeClass(wrapper, highlightColor);
             for (child of children) {
                 if(hasClass(child, "woc-highlighted")) {
                     removeClass(child, "woc-highlighted");
@@ -235,7 +235,7 @@ function highlightWrapper(wrapper, hightlightColor) {
             highlightColors.forEach((color) => {
                 removeClass(wrapper, color);
             });
-            addClass(wrapper, hightlightColor);
+            addClass(wrapper, highlightColor);
             for (child of children) {
                 if(hasClass(child, "woc")) {
                     removeClass(child, "woc");
@@ -263,8 +263,8 @@ function HighlightButtonClicked(me) {
 
         buttonClicked = me.id;
         allowHighlighting = true;
-        hightlightColor = "bg-" + me.id.split("-")[1] + "-600";
-        //console.log(hightlightColor);
+        highlightColor = "bg-" + me.id.split("-")[1] + "-600";
+        //console.log(highlightColor);
 
     }
 }

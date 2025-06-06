@@ -1,4 +1,4 @@
-module mr-stubblefield/bible-app
+module Anakin-Skywalker-124/bible-app
 
 go 1.24.1
 
